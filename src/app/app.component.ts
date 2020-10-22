@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'bullet';
+  colorScale = ["transparent", "green", "orange", "red"]
+  days = ['Mon', 'Tue', "Wed", 'Thu', 'Fri', 'Sat', 'Sun']
 }

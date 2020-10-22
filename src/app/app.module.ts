@@ -3,14 +3,18 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TileComponent } from './tile/tile.component';
+import { NgxSimpleCalendarModule } from 'ngx-simple-calendar';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TileComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxSimpleCalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

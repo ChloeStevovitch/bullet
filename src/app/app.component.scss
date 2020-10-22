@@ -1,0 +1,53 @@
+::ng-deep .ngx-calendar__day-of-week {
+  font-size: 1.2rem !important;
+  color: black !important;
+  text-align: center !important;
+}
+::ng-deep .ngx-calendar__title {
+  font-size: 2rem !important;
+  color: black !important;
+}
+::ng-deep .ngx-calendar__day {
+  height: 5.5rem !important;
+}
+
+.grid {
+  display: grid;
+  grid-template-areas: "head head head " "left content  right" "foot foot foot";
+  grid-template-rows: 10rem 50rem 1fr;
+  grid-template-columns: 1fr 50rem 1fr;
+}
+.head {
+  grid-area: head;
+  background-color: #ffc41e;
+}
+.content {
+  grid-area: content;
+  background-color: #fffaf5;
+}
+.left {
+  background-color: #f3ede6;
+  grid-area: left;
+}
+
+.right {
+  background-color: #f3ede6;
+  grid-area: right;
+}
+.foot {
+  background-color: #f3ede6;
+
+  grid-area: foot;
+}
+th {
+  width: 4rem;
+}
+td {
+  height: 4rem;
+}
+
+.calendar-container {
+  position: relative;
+  width: 40rem;
+  margin: 2rem;
+}
