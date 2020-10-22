@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-tile',
@@ -10,6 +12,8 @@ export class TileComponent implements OnInit {
   @Input() colorScale: Array<string>;
   @Input() default: number;
   @Input() date?: number;
+  @Input() start?: number;
+  @Output() event = new BehaviorSubject<any>({ start: null, value: null });
 
   constructor() { }
 
@@ -22,6 +26,11 @@ export class TileComponent implements OnInit {
     } else {
       this.value++;
     }
+    let start = _.words(this.start, /[^ ]+/g);
+    start = _.slice(start, 0, 4)
+    start = _.join(start, '_')
+
+    this.event.next({ start: start, value: this.value })
   }
 
 }

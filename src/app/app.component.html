@@ -8,8 +8,10 @@
     <div class="calendar-container mx-auto">
       <ngx-simple-calendar>
 
-        <ng-template let-date="number" let-active="today" let-weekend="weekend" #day>
-          <app-tile [default]='0' date='{{date}}' [colorScale]='colorScale'></app-tile>
+        <ng-template let-date="number" let-start='startDateTime' let-active="today" let-weekend="weekend" #day>
+          <app-tile *ngIf='retrieveValue' (event)='saveEvent($event)' [default]='retrieveValue(start)' date='{{date}}'
+            start='{{start}}' [colorScale]='colorScale'>
+          </app-tile>
         </ng-template>
 
       </ngx-simple-calendar>
