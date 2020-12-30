@@ -3,7 +3,10 @@
 
 body{
   background-color: #f3ede6;
-
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;
 }
 * {
   font-family: 'Press Start 2P', cursive;
@@ -15,21 +18,27 @@ body{
 
 
 .days{
-  width: 5rem;
-  height:5rem;
+  width: 4vw;
+  height: 4vw;
   text-align: center;
-  line-height: 5rem;
+  line-height:  4vw;
+  margin-bottom: -2px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.month{
+  margin-right: -2px;
 }
 .days-height{
-  height:5rem;
-  line-height: 5rem;
-
+  height: 4vw;
+  line-height:  4vw ;
 }
+
 .fat-border{
-  border: 1px solid rgb(0, 0, 0);
+  border: 2px solid rgb(0, 0, 0);
 }
 .fixed-width{
-  width: 15rem;
+  width: 18vw;
 }
 .grid {
   display: grid;

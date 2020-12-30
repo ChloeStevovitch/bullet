@@ -15,13 +15,13 @@
 				[color]="el"
 				class='mb-2 mx-3'
 			></app-color-picker>
-			<div class=" btn btn-dark fixed-width mt-2 mx-3	" (click)="reset()">reset grid</div>
+			<div class=" btn btn-dark fixed-width mt-4 mx-3	" (click)="reset()"> /!\ reset grid</div>
         </div>
     </div>
     <div class="my-5 content d-flex flex-column">
-        <div class="d-flex flex-nowrap">
+        <div class="d-flex flex-nowrap ">
 			<div  class="days"></div>
-            <div  *ngFor="let month of monthsName; let m = index" class="days">{{ monthsName[m] }}</div>
+            <div  *ngFor="let month of monthsName; let m = index" class=" month days">{{ monthsName[m] }}</div>
         </div>
         <div class="d-flex flex-nowrap">
             <div class="d-flex flex-column">
@@ -33,7 +33,7 @@
             </div>
             <div
                 *ngFor="let month of monthsName; let i = index"
-                class="d-flex flex-column"
+                class="d-flex flex-column month"
             >
                 <div
                     *ngFor="let el of initTable(monthsLength[i]); let j = index"
@@ -41,12 +41,11 @@
                 >
                     <div
                         class="cursor-pointer h-100 w-100 fat-border"
-                        (click)="handleClick(2020, month, j)"
-                        (mouseenter)="hoverDay(2020, month, j)"
-                        (mouseleave)="resetHoverDay()"
+						(click)="handleClick(2020, month, j)"
+						(contextmenu)="handleRightClick(2020, month, j)"	
                         [style.backgroundColor]="getColor(2020, month, j)"
-                    >
-                        {{ isHovered(2020, month, j) ? j + 1 : '' }}
+                    >	
+                      
                     </div>
                 </div>
             </div>

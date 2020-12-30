@@ -17,7 +17,6 @@ export class AppComponent {
   @LocalStorage() savedData;
   retrievedData;
   retrievedColorScale;
-  hoveredDay;
 
   initTable(length){
     return new Array(length)
@@ -43,15 +42,7 @@ export class AppComponent {
   save(name,value) {
     localStorage.setItem(name, JSON.stringify(value));
   }
-  isHovered(year, month, day){
-   return this.hoveredDay === this.convertDateToString(year,month,day)
-  }
-  hoverDay(year, month, day){
-    this.hoveredDay = this.convertDateToString(year,month,day)
-  }
-  resetHoverDay(){
-    this.hoveredDay = null
-  }
+
   getSaveData(name) {
     if (localStorage.getItem(name))
     return _.cloneDeep(JSON.parse(localStorage.getItem(name)))
@@ -97,5 +88,17 @@ export class AppComponent {
   }
   _.set(this.retrievedData,date,value)
   this.save('savedData',this.retrievedData);
+ }
+ handleRightClick(year,month,day) {
+  let date = this.convertDateToString(year,month,day)
+  let value: any = this.findValue(date)
+  if (value === 0) {
+    value = this.retrievedColorScale.length - 1
+  } else {
+    value -- ;
+  }
+  _.set(this.retrievedData,date,value)
+  this.save('savedData',this.retrievedData);
+  return false;
  }
 }
