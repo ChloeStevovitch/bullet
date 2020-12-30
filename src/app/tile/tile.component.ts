@@ -15,12 +15,12 @@ export class TileComponent implements OnInit {
   @Input() start?: number;
   @Output() event = new BehaviorSubject<any>({ start: null, value: null });
 
-  constructor() { }
 
   ngOnInit(): void {
     this.value = this.default;
   }
   changeColor = () => {
+    return
     if (this.value === this.colorScale.length - 1) {
       this.value = 0
     } else {

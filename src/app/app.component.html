@@ -3,44 +3,31 @@
     <span class='h1'>Color tracker</span>
   </div>
   <div class='left'></div>
-  <div class='right'></div>
+  <div class='right'>
+
+    <div  class='d-flex flex-column'>
+      <span class='h3 mx-3'>Legend</span>
+
+      <app-color-picker *ngFor='let el of retrievedColorScale; index as index' (colorPickerChange)="setColor($event)" [index]="index" [color]='el'></app-color-picker></div>
+  </div>
   <div class='content'>
     <div class="calendar-container mx-auto">
-      <ngx-simple-calendar>
-
-        <ng-template let-date="number" let-start='startDateTime' let-active="today" let-weekend="weekend" #day>
-          <app-tile *ngIf='retrieveValue' (event)='saveEvent($event)' [default]='retrieveValue(start)' date='{{date}}'
-            start='{{start}}' [colorScale]='colorScale'>
-          </app-tile>
-        </ng-template>
-
-      </ngx-simple-calendar>
+    
+        <mwl-calendar-month-view
+        [viewDate]="viewDate"
+        [events]="events"
+        (dayClicked)="handleClick($event.day.date)"
+        [refresh]="refresh"
+        (beforeViewRender)="beforeMonthViewRender($event)"  
+      >
+      </mwl-calendar-month-view>
+     
     </div>
-    <!-- <table>
-      <tr>
-        <th></th>
-        <th *ngFor='let el of days' scope="col">{{el}}</th>
+   
+  </div>
+  
 
-
-      </tr>
-      <tr>
-        <th scope="row">1 </th>
-        <td *ngFor='let el of days'>
-          <app-tile [default]='0' [colorScale]='colorScale'></app-tile>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">8</th>
-        <td *ngFor='let el of days'>
-          <app-tile [default]='0' [colorScale]='colorScale'></app-tile>
-      </tr>
-      <tr>
-        <th scope="row">15</th>
-        <td *ngFor='let el of days'>
-          <app-tile [default]='0' [colorScale]='colorScale'></app-tile>
-      </tr>
-    </table> -->
+  <div class='foot'>
 
   </div>
-  <div class='foot'></div>
 </div>

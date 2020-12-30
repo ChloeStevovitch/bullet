@@ -10,16 +10,41 @@
 ::ng-deep .ngx-calendar__day {
   height: 5.5rem !important;
 }
+.cal-month-view .color0 {
+  background-color: hotpink !important;
+}
+.cal-month-view .color1 {
+  background-color: yellow !important;
+}
+.cal-month-view .color2 {
+  background-color: green !important;
+}
+.cal-month-view .color3 {
+  background-color: blue !important;
+}
+
+
+// mwl-calendar-month-cell:hover {
+//   background-color: none !important;
+// }
+// mwl-calendar-month-cell {
+//   background-color: none !important;
+
+// }
+// .cal-month-view:hover{
+//   background-color: inherit;
+// }
+
 
 .grid {
   display: grid;
   grid-template-areas: "head head head " "left content  right" "foot foot foot";
-  grid-template-rows: 10rem 50rem 1fr;
+  grid-template-rows: 10rem 40rem 1fr;
   grid-template-columns: 1fr 50rem 1fr;
 }
 .head {
   grid-area: head;
-  background-color: #ffc41e;
+  background-color: #f3ede6;
 }
 .content {
   grid-area: content;
