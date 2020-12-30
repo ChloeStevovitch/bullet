@@ -1,33 +1,58 @@
-<div class='grid w-100 h-100'>
-  <div class='head d-flex align-items-center justify-content-center'>
-    <span class='h1'>Color tracker</span>
-  </div>
-  <div class='left'></div>
-  <div class='right'>
-
-    <div  class='d-flex flex-column'>
-      <span class='h3 mx-3'>Legend</span>
-
-      <app-color-picker *ngFor='let el of retrievedColorScale; index as index' (colorPickerChange)="setColor($event)" [index]="index" [color]='el'></app-color-picker></div>
-  </div>
-  <div class='content'>
-    <div class="calendar-container mx-auto">
-    
-        <mwl-calendar-month-view
-        [viewDate]="viewDate"
-        [events]="events"
-        (dayClicked)="handleClick($event.day.date)"
-        [refresh]="refresh"
-        (beforeViewRender)="beforeMonthViewRender($event)"  
-      >
-      </mwl-calendar-month-view>
-     
+<div class="grid w-100 h-100">
+    <div class="head d-flex align-items-center justify-content-center">
+        <span class="h1 my-5">Color tracker</span>
     </div>
-   
-  </div>
-  
+    <div class="left"></div>
+    <div class="right my-5">
+        <div class="d-flex flex-column">
 
-  <div class='foot'>
+            <span class="h3 mx-3 days-height">Legend</span>
 
-  </div>
+            <app-color-picker
+                *ngFor="let el of retrievedColorScale; let h = index"
+                (colorPickerChange)="setColor($event)"
+                [index]="h"
+				[color]="el"
+				class='mb-2 mx-3'
+			></app-color-picker>
+			<div class=" btn btn-dark fixed-width mt-2 mx-3	" (click)="reset()">reset grid</div>
+        </div>
+    </div>
+    <div class="my-5 content d-flex flex-column">
+        <div class="d-flex flex-nowrap">
+			<div  class="days"></div>
+            <div  *ngFor="let month of monthsName; let m = index" class="days">{{ monthsName[m] }}</div>
+        </div>
+        <div class="d-flex flex-nowrap">
+            <div class="d-flex flex-column">
+                <div
+                    *ngFor="let el of initTable(31); let l = index"
+                    class="days">
+                    {{ l+1 }}
+                </div>
+            </div>
+            <div
+                *ngFor="let month of monthsName; let i = index"
+                class="d-flex flex-column"
+            >
+                <div
+                    *ngFor="let el of initTable(monthsLength[i]); let j = index"
+                    class="days"
+                >
+                    <div
+                        class="cursor-pointer h-100 w-100 fat-border"
+                        (click)="handleClick(2020, month, j)"
+                        (mouseenter)="hoverDay(2020, month, j)"
+                        (mouseleave)="resetHoverDay()"
+                        [style.backgroundColor]="getColor(2020, month, j)"
+                    >
+                        {{ isHovered(2020, month, j) ? j + 1 : '' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="foot">
+        
+    </div>
 </div>

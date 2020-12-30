@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { CalendarEvent, CalendarMonthViewBeforeRenderEvent, CalendarView } from 'angular-calendar';
+import { Component, ViewEncapsulation } from '@angular/core';
 import * as _ from 'lodash';
 import { LocalStorage } from 'ngx-webstorage';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,41 +11,25 @@ import { Subject } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'bullet';
   @LocalStorage() colorScale;
-  clickedDate: Date;
-  days = ['Mon', 'Tue', "Wed", 'Thu', 'Fri', 'Sat', 'Sun']
-
+  monthsLength = [31,29,31,30,31,30,31,31,30,31,30,31]
+  monthsName = ['Jan', 'Feb', "Mar", 'Apr','May', 'Jun', 'Jul', 'Aug','Sep','Oct','Nov','Dec']
   @LocalStorage() savedData;
   retrievedData;
   retrievedColorScale;
-  view: CalendarView = CalendarView.Month;
-  viewDate: Date = new Date();
-  events: CalendarEvent[] = [];
-  dayClicked
-  refresh: Subject<any> = new Subject();
+  hoveredDay;
 
-  beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
-    renderEvent.body.forEach((day) => {
-      let dateString = this.convertDateToString(day.date)
-      if ( this.findData(dateString)){
-        if(this.findValue(dateString) === 0)
-        day.cssClass = 'color0' ;
-        if(this.findValue(dateString) === 1)
-        day.cssClass = 'color1' ;
-        if(this.findValue(dateString) === 2)
-        day.cssClass = 'color2' ;
-        if(this.findValue(dateString) === 3)
-        day.cssClass = 'color3' ;
-      }
-     
-    });
+  initTable(length){
+    return new Array(length)
   }
-
+  reset(){
+    if (confirm('Are you sure you want to delete all your data ? ')){
+      this.save('savedData',{})
+      this.retrievedData = this.getSaveData('savedData');
+    }
+  }
  
   ngOnInit() {
-
- 
     if (!this.getSaveData('savedData')) {
      this.save('savedData', {});
     }
@@ -56,17 +38,20 @@ export class AppComponent {
     }
     this.retrievedData = this.getSaveData('savedData');
     this.retrievedColorScale = this.getSaveData('colorScale');
-    _.set(document.styleSheets[3].cssRules[0],'style.backgroundColor',this.retrievedColorScale[0])
-    _.set(document.styleSheets[3].cssRules[1],'style.backgroundColor',this.retrievedColorScale[1])
-    _.set(document.styleSheets[3].cssRules[2],'style.backgroundColor',this.retrievedColorScale[2])
-    _.set(document.styleSheets[3].cssRules[3],'style.backgroundColor',this.retrievedColorScale[3])
-
   }
 
   save(name,value) {
     localStorage.setItem(name, JSON.stringify(value));
   }
-
+  isHovered(year, month, day){
+   return this.hoveredDay === this.convertDateToString(year,month,day)
+  }
+  hoverDay(year, month, day){
+    this.hoveredDay = this.convertDateToString(year,month,day)
+  }
+  resetHoverDay(){
+    this.hoveredDay = null
+  }
   getSaveData(name) {
     if (localStorage.getItem(name))
     return _.cloneDeep(JSON.parse(localStorage.getItem(name)))
@@ -86,28 +71,24 @@ export class AppComponent {
     }
     this.retrievedColorScale[index] = newColor
     this.save('colorScale',this.retrievedColorScale);
-    _.set(document.styleSheets[3].cssRules[index],'style.backgroundColor',this.retrievedColorScale[index])
-
   }
-  convertDateToString(date){
-    let string = _.words(date, /[^ ]+/g);
-    string = _.slice(string, 0, 4);
-    string = _.join(string, '_');
+  getColor(year,month,day){
+    let date = this.convertDateToString(year,month,day)
+    let value: any = this.findValue(date)
+    return this.retrievedColorScale[value];
+  }
+  convertDateToString(year,months,days){
+    let string =_.join([year,months,days], '_');
     return string
   }
-
   findValue(date : string){
     return _.get(this.retrievedData, date, 0)
   }
   findData(date : string){
     return _.get(this.retrievedData, date, null)
   }
-  refreshView(): void {
-    this.refresh.next();
-  }
-
-  handleClick(event) {
-  let date = this.convertDateToString(event)
+  handleClick(year,month,day) {
+  let date = this.convertDateToString(year,month,day)
   let value: any = this.findValue(date)
   if (value === this.retrievedColorScale.length - 1) {
     value = 0
@@ -116,6 +97,5 @@ export class AppComponent {
   }
   _.set(this.retrievedData,date,value)
   this.save('savedData',this.retrievedData);
-  this.refreshView()
  }
 }
