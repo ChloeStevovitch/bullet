@@ -25,12 +25,13 @@ export class AppComponent {
         'Nov',
         'Dec',
     ]
+    JSON= JSON
     retrievedBackgroundColor
     retrievedData
     retrievedColorScale
     retrievedTextColor
     retrievedBorderColor
-
+    editionMode = false
     initTable(length) {
         return new Array(length)
     }
@@ -67,12 +68,29 @@ export class AppComponent {
         this.retrievedColorScale = this.getSaveData('colorScale')
         this.retrievedTextColor = this.getSaveData('textColor')
     }
-
-    updateColor(event, savedDataName,retrievedDataName, index?) {
+    openEdition() {
+        this.editionMode = !this.editionMode
+    }
+    isJson(str) {
+      try {
+          JSON.parse(str);
+      } catch (e) {
+          return false;
+      }
+      return true;
+  }
+    handleNewData(event: Event): void {
+      if (!this.isJson(_.get(event.target,'value'))){
+        return
+      }
+      this.save('savedData',JSON.parse(_.get(event.target,'value')))
+      this.retrievedData = this.getSaveData('savedData')
+  }
+    updateColor(event, savedDataName, retrievedDataName, index?) {
         if (_.isEmpty(event)) {
             return
         }
-       
+
         const newColor = _.get(event, 'color')
         if (index || index === 0) {
             const index = _.get(event, 'index')
@@ -82,10 +100,10 @@ export class AppComponent {
             }
             _.set(this.retrievedColorScale[index], 'color', newColor)
         } else {
-            _.set(this,retrievedDataName, newColor)
+            _.set(this, retrievedDataName, newColor)
         }
 
-        this.save(savedDataName, _.get(this,retrievedDataName))
+        this.save(savedDataName, _.get(this, retrievedDataName))
     }
 
     save(name, value) {
@@ -151,7 +169,7 @@ export class AppComponent {
         return _.get(this.retrievedColorScale[value], 'color')
     }
     convertDateToString(year, months, days) {
-        let string = _.join([year, months, days], '_')
+        let string = _.join([year, months, days + 1 ], '_')
         return string
     }
     findValue(date: string) {
