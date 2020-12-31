@@ -1,12 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
+
+
+
 body{
-  background-color: #f3ede6;
   -webkit-user-select: none;  /* Chrome all / Safari all */
   -moz-user-select: none;     /* Firefox all */
   -ms-user-select: none;      /* IE 10+ */
   user-select: none;
+  height: fit-content;
+  width: 100%;
 }
 * {
   font-family: 'Press Start 2P', cursive;
@@ -35,10 +39,23 @@ body{
 }
 
 .fat-border{
-  border: 2px solid rgb(0, 0, 0);
+  border-width: 2px;
+  border-style: solid;
+}
+.fat-border-black{
+  border-color: black;
 }
 .fixed-width{
   width: 18vw;
+}
+.fixed-width-legend{
+  width: 10vw;
+}
+.form-control:focus{
+  outline: none;
+  border-color: unset;
+  box-shadow: unset;
+  border: 2px solid black;
 }
 .grid {
   display: grid;

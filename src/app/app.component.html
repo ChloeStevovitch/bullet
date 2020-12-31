@@ -1,34 +1,81 @@
-<div class="grid w-100 h-100">
+<div
+    class="grid w-100 h-100"
+    [style.backgroundColor]="retrievedBackgroundColor"
+	[style.color]="retrievedTextColor"
+	[style.borderColor]="retrievedBorderColor"
+>
     <div class="head d-flex align-items-center justify-content-center">
         <span class="h1 my-5">Color tracker</span>
     </div>
     <div class="left"></div>
     <div class="right my-5">
         <div class="d-flex flex-column">
-
             <span class="h3 mx-3 days-height">Legend</span>
 
             <app-color-picker
                 *ngFor="let el of retrievedColorScale; let h = index"
-                (colorPickerChange)="setColor($event)"
+				(colorPickerChange)="updateColor($event, 'colorScale','retrievedColorScale',h)"
+				(legendUpdate)="setLegend($event)"
+                (deleteEvent)="handleDelete($event)"
                 [index]="h"
-				[color]="el"
-				class='mb-2 mx-3'
-			></app-color-picker>
-			<div class=" btn btn-dark fixed-width mt-4 mx-3	" (click)="reset()"> /!\ reset grid</div>
+				[color]="el.color"
+				[legend]="el.legend ? el.legend : 'Level ' + h"
+                class="mb-2 mx-3"
+            ></app-color-picker>
+            <div
+                class="btn btn-light fat-border fat-border-black fixed-width mt-4 mx-3"
+                (click)="addColor()"
+            >
+                add a color
+            </div>
+
+            <span class="h3 my-3 mx-3 days-height">Background</span>
+            <app-color-picker
+                (colorPickerChange)="updateColor($event, 'backgroundColor','retrievedBackgroundColor')"
+                [color]="retrievedBackgroundColor"
+                class="mb-2 mx-3"
+            ></app-color-picker>
+
+            <span class="h3 my-3 mx-3 days-height">text</span>
+            <app-color-picker
+                (colorPickerChange)="updateColor($event, 'textColor','retrievedTextColor')"
+                [color]="retrievedTextColor"
+				class="mb-2 mx-3"
+				[textLight]='true'
+
+            ></app-color-picker>
+            <span class="h3 my-3 mx-3 days-height">Grid</span>
+            <app-color-picker
+                (colorPickerChange)="updateColor($event, 'borderColor','retrievedBorderColor')"
+                [color]="retrievedBorderColor"
+				class="mb-2 mx-3 "
+				[textLight]='true'
+            ></app-color-picker>
+            <div class="btn btn-dark fixed-width mx-3" (click)="reset()">
+                /!\ reset grid
+            </div>
         </div>
     </div>
-    <div class="my-5 content d-flex flex-column">
-        <div class="d-flex flex-nowrap ">
-			<div  class="days"></div>
-            <div  *ngFor="let month of monthsName; let m = index" class=" month days">{{ monthsName[m] }}</div>
+    <div
+        class="my-5 content d-flex flex-column"
+      
+    >
+        <div class="d-flex flex-nowrap">
+            <div class="days"></div>
+            <div
+                *ngFor="let month of monthsName; let m = index"
+                class="month days"
+            >
+                {{ monthsName[m] }}
+            </div>
         </div>
         <div class="d-flex flex-nowrap">
             <div class="d-flex flex-column">
                 <div
                     *ngFor="let el of initTable(31); let l = index"
-                    class="days">
-                    {{ l+1 }}
+                    class="days"
+                >
+                    {{ l + 1 }}
                 </div>
             </div>
             <div
@@ -41,17 +88,15 @@
                 >
                     <div
                         class="cursor-pointer h-100 w-100 fat-border"
-						(click)="handleClick(2020, month, j)"
-						(contextmenu)="handleRightClick(2020, month, j)"	
-                        [style.backgroundColor]="getColor(2020, month, j)"
-                    >	
-                      
-                    </div>
+                        (click)="handleClick(2020, month, j)"
+                        (contextmenu)="handleRightClick(2020, month, j)"
+						[style.backgroundColor]="getColor(2020, month, j)"
+						[style.borderColor]="retrievedBorderColor"
+						
+                    ></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="foot">
-        
-    </div>
+    <div class="foot"></div>
 </div>
