@@ -1,0 +1,125 @@
+
+<div class="grid-content">
+    <div class="left"></div>
+
+    <div class="right my-5">
+        <div class="d-flex flex-column">
+            <span class="h3 mx-3 days-height">Legend</span>
+
+            <app-color-picker
+                *ngFor="let el of retrievedColorScale; let h = index"
+                (colorPickerChange)="
+                    updateColor($event, 'colorScale', 'retrievedColorScale', h)
+                "
+                (legendUpdate)="setLegend($event)"
+                (deleteEvent)="handleDelete($event)"
+                [index]="h"
+                [color]="el.color"
+                [legend]="el.legend ? el.legend : 'Level ' + h"
+                class="mb-2 mx-3"
+            ></app-color-picker>
+            <div
+                class="btn cursor-pointer btn-light fat-border fat-border-black fixed-width mt-4 mx-3"
+                (click)="addColor()"
+            >
+                add a color
+            </div>
+
+            <span class="h3 my-3 mx-3 days-height">Background</span>
+            <app-color-picker
+                (colorPickerChange)="
+                    updateColor(
+                        $event,
+                        'backgroundColor',
+                        'retrievedBackgroundColor'
+                    )
+                "
+                [color]="retrievedBackgroundColor"
+                class="mb-2 mx-3"
+            ></app-color-picker>
+
+            <span class="h3 my-3 mx-3 days-height">Text</span>
+            <app-color-picker
+                (colorPickerChange)="
+                    updateColor($event, 'textColor', 'retrievedTextColor')
+                "
+                [color]="retrievedTextColor"
+                class="mb-2 mx-3"
+                [textLight]="true"
+            ></app-color-picker>
+            <span class="h3 my-3 mx-3 days-height">Grid</span>
+            <app-color-picker
+                (colorPickerChange)="
+                    updateColor($event, 'borderColor', 'retrievedBorderColor')
+                "
+                [color]="retrievedBorderColor"
+                class="mb-2 mx-3"
+                [textLight]="true"
+            ></app-color-picker>
+            <span class="h3 my-3 mx-3 days-height">Data</span>
+
+            <div
+                class="btn btn-light cursor-pointer fat-border fat-border-black fixed-width mb-2 mx-3"
+                (click)="toggleEdition()"
+            >
+                {{ !editionMode ? 'show data' : 'hide data' }}
+            </div>
+            <textarea
+                class="formControl mx-3 my-3 fixed-width-edition"
+                (blur)="handleNewData($event)"
+                *ngIf="editionMode"
+                [value]="JSON.stringify(retrievedData)"
+            ></textarea>
+            <div
+                class="btn btn-dark fixed-width mx-3  my-3 cursor-pointer"
+                (click)="reset()"
+            >
+                /!\ reset data
+            </div>
+            <div
+            class="btn btn-dark fixed-width mx-3 cursor-pointer"
+            (click)="handleTrackerDelete()"
+        >
+            /!\ delete tracker
+        </div>
+        </div>
+    </div>
+    <div class="my-5 middle  d-flex flex-column">
+        <div class="d-flex flex-nowrap">
+            <div class="days"></div>
+            <div
+                *ngFor="let month of monthsName; let m = index"
+                class="month days"
+            >
+                {{ monthsName[m] }}
+            </div>
+        </div>
+        <div class="d-flex flex-nowrap">
+            <div class="d-flex flex-column">
+                <div
+                    *ngFor="let el of initTable(31); let l = index"
+                    class="days"
+                >
+                    {{ l + 1 }}
+                </div>
+            </div>
+            <div
+                *ngFor="let month of monthsName; let i = index"
+                class="d-flex flex-column month"
+            >
+                <div
+                    *ngFor="let el of initTable(monthsLength[i]); let j = index"
+                    class="days"
+                >
+                    <div
+                        class="cursor-pointer h-100 w-100 fat-border"
+                        (click)="handleClick(year, month, j)"
+                        (contextmenu)="handleRightClick(year, month, j)"
+                        [style.backgroundColor]="getColor(year, month, j)"
+                        [style.borderColor]="retrievedBorderColor"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

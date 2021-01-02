@@ -5,12 +5,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ColorPickerComponent } from './color-picker/color-picker.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { ShelfComponent } from './shelf/shelf.component';
+import { ColorTrackerComponent } from './color-tracker/color-tracker.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ColorPickerComponent
+    ColorPickerComponent,
+    ShelfComponent,
+    ColorTrackerComponent
   ],
   imports: [
     BrowserModule,

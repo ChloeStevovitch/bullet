@@ -20,7 +20,16 @@ body{
   cursor: url(assets/images/cursor48.ico), pointer;
 } 
 
-
+input[type=text]{
+  cursor: url(assets/images/edition32.ico), text;
+} 
+.grid-2x2{
+  width: fit-content;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 2px;
+}
 
 .days{
   width: 4vw;
@@ -46,6 +55,9 @@ body{
 .fat-border-black{
   border-color: black;
 }
+.underlined{
+  border-bottom: 2px solid;
+}
 .fixed-width{
   width: 18vw;
 }
@@ -63,7 +75,20 @@ body{
 }
 .grid {
   display: grid;
-  grid-template-areas: "head head head " "left content  right" "foot foot foot";
+  grid-template-areas: "head " "content" "foot";
+}
+.grid-content {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: auto 1fr 1fr;
+  grid-template-areas: "left middle right";
+  gap: 3rem;
+}
+.fit-content {
+  width: fit-content;
+}
+.middle {
+  grid-area: middle;
 }
 .head {
   grid-area: head;
