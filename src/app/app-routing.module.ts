@@ -1,13 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ShelfComponent } from './shelf/shelf.component';
+import { AboutComponent } from './about/about.component';
+import { AppComponent } from './app.component';
+import { ColorTrackerContainerComponent } from './color-tracker-container/color-tracker-container.component';
 
 
 const routes: Routes = [
-  { path: 'shelf', component: ShelfComponent },
-  { path: 'colorTrack/:id', component: ShelfComponent }
-];
-
+  { path: '',  component: AppComponent,
+    children: [
+      { path: '', component: ColorTrackerContainerComponent },
+      { path: 'about', component: AboutComponent },
+     
+    ] 
+  },
+  { path: '**', redirectTo: ''  }
+]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
