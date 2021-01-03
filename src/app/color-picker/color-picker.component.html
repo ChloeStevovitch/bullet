@@ -1,4 +1,4 @@
-<div class="d-flex  flex-nowrap align-items-center">
+<div class="d-flex align-items-center">
     <input
         *ngIf="index || legend"
         type="text"
@@ -6,6 +6,7 @@
         [value]="legend"
         (blur)='onLegendUpdate($event)'
     />
+    <div class='d-flex flex-nowrap'>
     <input
         class="btn fat-border fat-border-black cursor-pointer fixed-width"
         [class.text-light]="textLight"
@@ -15,4 +16,5 @@
         [style.background]="color"
     />
     <div *ngIf="index > 1" class="btn" (click)="handleDelete()">x</div>
+    </div>
 </div>

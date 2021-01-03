@@ -21,7 +21,7 @@ export class AboutComponent implements OnInit, AfterViewInit {
             this.textElement1.nativeElement,
             'My name is Chloe, 30 y.o web developer based in Montreal (Canada).',
             0,
-            20,
+            15,
             600
         )
 
@@ -29,16 +29,16 @@ export class AboutComponent implements OnInit, AfterViewInit {
             this.textElement2.nativeElement,
             'I had fun developing this little app on my own during the last Christmas holidays.',
             0,
-            20,
-            3000
+            15,
+            2500
         )
 
         this.showText(
             this.textElement3.nativeElement,
             'If you want to help me maintain this project, you can find the repository on github, or you can contribute with paypal :).',
             0,
-            20,
-            6000
+            10,
+            5000
         )
     }
 

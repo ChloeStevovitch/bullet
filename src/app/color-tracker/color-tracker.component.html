@@ -53,31 +53,31 @@
                     updateColor($event, 'borderColor', 'retrievedBorderColor')
                 "
                 [color]="retrievedBorderColor"
-                class="mb-2 mx-3"
+                class="mb-2  mx-3"
                 [textLight]="true"
             ></app-color-picker>
             <span class="h3 my-3 mx-3 days-height">Data</span>
 
             <div
-                class="btn btn-light cursor-pointer fat-border fat-border-black fixed-width mb-2 mx-3"
+                class="btn btn-light cursor-pointer fat-border fat-border-black fixed-width mb-3  mx-3"
                 (click)="toggleEdition()"
             >
                 {{ !editionMode ? 'show data' : 'hide data' }}
             </div>
             <textarea
-                class="formControl mx-3 my-3 fixed-width-edition"
+                class="formControl mx-3 mb-3 fixed-width-edition"
                 (blur)="handleNewData($event)"
                 *ngIf="editionMode"
-                [value]="JSON.stringify(retrievedData)"
+                [value]="JSON.stringify(retrievedTracker)"
             ></textarea>
             <div
-                class="btn btn-dark fixed-width mx-3  my-3 cursor-pointer"
+                class="btn fat-border fat-border-black fixed-width mb-3 mx-3 cursor-pointer"
                 (click)="reset()"
             >
                 /!\ reset data
             </div>
             <div
-            class="btn btn-dark fixed-width mx-3 cursor-pointer"
+            class="btn  fixed-width fat-border fat-border-black mx-3 cursor-pointer"
             (click)="handleTrackerDelete()"
         >
             /!\ delete tracker

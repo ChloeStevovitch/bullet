@@ -4,13 +4,19 @@
     <div
         class="card fat-border-black fat-border card-border d-flex align-items-center justify-content-between"
     >
-        <div class="fixed-width-edition">
+        <div class="w-100 p-5">
             <div #text></div>
             <div #text1></div>
             <div #text2></div>
             <div #text3 class="my-3"></div>
         </div>
         <div class="donate align-items-center d-flex flex-nowrap">
+            <div
+                class="btn fat-border fat-border-black btn-dark mx-3 my-3 cursor-pointer"
+                (click)="goTo('')"
+            >
+                <- Back
+            </div>
             <form
                 action="https://www.paypal.com/donate"
                 method="post"
@@ -21,8 +27,10 @@
                 <input type="hidden" name="currency_code" value="CAD" />
                 <input
                     type="image"
-                    src="https://scontent.fymq3-1.fna.fbcdn.net/v/t1.15752-9/135415723_1437687719955910_3828894911405000399_n.png?_nc_cat=110&ccb=2&_nc_sid=ae9488&_nc_ohc=RjfwQX0T1HsAX_r12Qk&_nc_ht=scontent.fymq3-1.fna&oh=4f43a88d3844f104622feda05b6fab79&oe=6016C710"
+                    src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
                     border="0"
+                    [style.height.px]='39'
+                    class='cursor-pointer'
                     name="submit"
                     title="PayPal - The safer, easier way to pay online!"
                     alt="Donate with PayPal button"
@@ -35,17 +43,12 @@
                     height="1"
                 />
             </form>
+
             <div
-                class="btn btn-dark fixed-width-legend mx-3 my-3 cursor-pointer"
-                (click)="goTo('')"
+                class="btn fat-border-black fat-border mx-3 my-3 cursor-pointer"
+                (click)="goToUrl('https://github.com/ChloeStevovitch/colorTracker')"
             >
-                ↵ Back to tracker
-            </div>
-            <div
-                class="btn btn-dark fixed-width-legend mx-3 my-3 cursor-pointer"
-                (click)="goToUrl('https://github.com/ChloeStevovitch/bullet')"
-            >
-                ↵ Go to repo
+                Go to repo ->
             </div>
         </div>
     </div>

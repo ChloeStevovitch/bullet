@@ -32,6 +32,7 @@ export class ColorTrackerComponent implements OnInit {
     retrievedTextColor
     retrievedBorderColor
     retrievedTitle
+    retrievedTracker
     inputId
     editionMode = false
     constructor(private s: LocalServiceService) {}
@@ -69,7 +70,7 @@ export class ColorTrackerComponent implements OnInit {
                 this.s.setTrackerVariable(
                     this.inputId,
                     'backgroundColor',
-                    '#f3ede6'
+                    '#ffffff'
                 )
             }
             if (!this.s.getTrackerVariable(this.inputId, 'textColor')) {
@@ -110,6 +111,7 @@ export class ColorTrackerComponent implements OnInit {
                 this.inputId,
                 'title'
             )
+            this.retrievedTracker = this.s.getTrackerData(this.inputId)
         })
     }
 
@@ -120,12 +122,9 @@ export class ColorTrackerComponent implements OnInit {
     reset() {
         if (confirm('Are you sure you want to delete all your data ? ')) {
             this.s.setTrackerVariable(this.inputId, 'savedData', {})
-            this.retrievedData = this.s.getTrackerVariable(
-                this.inputId,
-                'savedData'
-            )
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
+                    this.s.currentId.next(this.inputId)
 
+            document.body.scrollTop = document.documentElement.scrollTop = 0
         }
     }
     toggleEdition() {
@@ -148,15 +147,11 @@ export class ColorTrackerComponent implements OnInit {
         if (!this.isJson(_.get(event.target, 'value'))) {
             return
         }
-        this.s.setTrackerVariable(
+        this.s.setTrackerData(
             this.inputId,
-            'savedData',
             JSON.parse(_.get(event.target, 'value'))
         )
-        this.retrievedData = this.s.getTrackerVariable(
-            this.inputId,
-            'savedData'
-        )
+        this.s.currentId.next(this.inputId)
     }
     updateColor(event, savedDataName, retrievedDataName, index?) {
         if (_.isEmpty(event)) {
@@ -173,12 +168,14 @@ export class ColorTrackerComponent implements OnInit {
         } else {
             _.set(this, retrievedDataName, newColor)
         }
-
         this.s.setTrackerVariable(
             this.inputId,
             savedDataName,
             _.get(this, retrievedDataName)
         )
+        this.s.currentId.next(this.inputId)
+
+
     }
 
     setLegend(event) {

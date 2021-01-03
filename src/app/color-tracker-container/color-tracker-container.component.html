@@ -1,5 +1,5 @@
 <div
-    class="grid w-100 h-100"
+    class="d-flex grid flex-column w-100"
     [style.backgroundColor]="retrievedBackgroundColor"
     [style.color]="retrievedTextColor"
     [style.borderColor]="retrievedBorderColor"
@@ -37,8 +37,15 @@
         class="content"
     ></app-color-tracker>
     <div class="d-flex justify-content-end foot">
+        <div (click)='handleResetAll()'
+        class="btn fat-border fat-border-black mx-5  my-3 cursor-pointer"
+      
+    >
+       /!\ Delete all 
+    </div>
+    <div class="d-flex justify-content-end foot">
         <div (click)='goTo("about")'
-        class="btn btn-dark fixed-width-legend mx-5  my-3 cursor-pointer"
+        class="btn fat-border fat-border-black mx-5  my-3 cursor-pointer"
       
     >
        ? about

@@ -53,4 +53,5 @@ export class LocalServiceService {
     setTrackersData(trackers) {
         localStorage.setItem('trackers', JSON.stringify(trackers))
     }
+   
 }

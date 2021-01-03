@@ -1,108 +1,145 @@
 /* You can add global styles to this file, and also import other style files */
-@import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import '../node_modules/angular-calendar/css/angular-calendar.css';
 
+body {
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none;
+    width: 100%;
+    height: 100%;
 
-
-
-body{
-  -webkit-user-select: none;  /* Chrome all / Safari all */
-  -moz-user-select: none;     /* Firefox all */
-  -ms-user-select: none;      /* IE 10+ */
-  user-select: none;
-  width: 100%;
-  height: 100%;
-
-  cursor: url(assets/images/default48.ico), default;
+    cursor: url(assets/images/default48.ico), default;
 }
 * {
-  font-family: 'Press Start 2P', cursive;
+    font-family: 'Press Start 2P', cursive;
 }
-.cursor-pointer{
-  cursor: url(assets/images/cursor48.ico), pointer;
-} 
-
-input[type=text]{
-  cursor: url(assets/images/edition32.ico), text;
-} 
-.grid-2x2{
-  width: fit-content;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  grid-gap: 2px;
+.btn {
+    border-radius: 0px;
+    &:hover.fat-border-black {
+        transition: none;
+        background-color: inherit;
+        color: inherit;
+        border-color: inherit;
+        outline: 2px solid black;
+    }
 }
-
-.days{
-  width: 4vw;
-  height: 4vw;
-  text-align: center;
-  line-height:  4vw;
-  margin-bottom: -2px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.month{
-  margin-right: -2px;
-}
-.days-height{
-  height: 4vw;
-  line-height:  4vw ;
+.grid{  
+  height: fit-content;
 }
 
-.fat-border{
-  border-width: 2px;
-  border-style: solid;
+.cursor-pointer {
+    cursor: url(assets/images/cursor48.ico), pointer;
 }
-.fat-border-black{
-  border-color: black;
+
+input[type='text'] {
+    cursor: url(assets/images/edition32.ico), text;
+    border-radius: 0;
+    border: 2px dotted black;
 }
-.underlined{
-  border-bottom: 2px solid;
+.grid-2x2 {
+    width: fit-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 2px;
 }
-.fixed-width{
-  width: 18vw;
+
+.days {
+    width: 4vw;
+    height: 4vw;
+    text-align: center;
+    line-height: 4vw;
+    margin-bottom: -2px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
-.fixed-width-legend{
-  width: 10vw;
+.month {
+    margin-right: -2px;
 }
-.fixed-width-edition{
-  width: 25vw;
+.days-height {
+    height: 4vw;
+    line-height: 4vw;
 }
-.form-control:focus{
-  outline: none;
-  border-color: unset;
-  box-shadow: unset;
-  border: 2px solid black;
+
+.fat-border {
+    border-width: 2px;
+    border-style: solid;
 }
-.grid {
-  display: grid;
-  grid-template-areas: "head " "content" "foot";
+.fat-border-black {
+    border-color: black;
 }
+.underlined {
+    border-bottom: 2px solid;
+}
+.fixed-width {
+    width: 18vw;
+}
+.fixed-width-legend {
+    width: 10vw;
+}
+.fixed-width-edition {
+    width: 25vw;
+}
+.form-control:focus {
+    outline: none;
+    border-color: unset;
+    box-shadow: unset;
+    border: 2px solid black;
+}
+
 .grid-content {
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: auto 1fr 1fr;
-  grid-template-areas: "left middle right";
-  gap: 3rem;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: auto 1fr 1fr;
+    grid-template-areas: 'left middle right';
+    gap: 3rem;
 }
+
 .fit-content {
-  width: fit-content;
+    width: fit-content;
 }
 .middle {
-  grid-area: middle;
+    grid-area: middle;
 }
 .head {
-  grid-area: head;
+    grid-area: head;
 }
 .content {
-  grid-area: content;
+    grid-area: content;
 }
 .left {
-  grid-area: left;
+    grid-area: left;
 }
 .right {
-  grid-area: right;
+    grid-area: right;
 }
 .foot {
-  grid-area: foot;
+    grid-area: foot;
+}
+
+@media (max-width: 480px) {
+    .grid {
+        padding: 0.5rem;
+    }
+    .grid-content {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr;
+        grid-template-areas: 'middle' 'right';
+        gap: 0;
+    }
+    .days {
+        width: 7vw;
+        height: 7vw;
+    }
+    .fixed-width {
+        width: 75%;
+    }
+    .fixed-width-legend {
+        width: 75%;
+    }
+    .fixed-width-edition {
+        width: 75%;
+    }
 }
