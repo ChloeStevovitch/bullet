@@ -265,6 +265,9 @@ export class ColorTrackerComponent implements OnInit {
         }
         _.set(this.retrievedData, date, value)
         this.s.setTrackerVariable(this.inputId, 'savedData', this.retrievedData)
+        if(this.editionMode){
+            this.retrievedTracker = this.s.getTrackerData(this.inputId)
+        }
     }
     handleRightClick(year, month, day) {
         let date = this.convertDateToString(year, month, day)

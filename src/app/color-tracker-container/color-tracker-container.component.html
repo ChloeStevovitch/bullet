@@ -38,8 +38,8 @@
     ></app-color-tracker>
     <div class="d-flex justify-content-end foot">
         <div (click)='handleResetAll()'
+        *ngIf="getRetrievedTrackersArray().length"
         class="btn fat-border fat-border-black mx-5  my-3 cursor-pointer"
-      
     >
        /!\ Delete all 
     </div>

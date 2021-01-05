@@ -63,7 +63,7 @@ export class ColorTrackerContainerComponent implements OnInit {
             if (confirm('Really really sure ? ')) {
                 localStorage.clear()
                 this.s.setTrackersData({})
-                this.handleNewTracker()
+                this.s.currentId.next(null)
                 document.body.scrollTop = document.documentElement.scrollTop = 0
             }
         }
