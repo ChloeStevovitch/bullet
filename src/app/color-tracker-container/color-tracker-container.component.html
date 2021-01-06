@@ -36,17 +36,16 @@
     <app-color-tracker *ngIf="s.currentId.value"
         class="content"
     ></app-color-tracker>
-    <div class="d-flex justify-content-end foot">
+    <div class="d-flex foot">
         <div (click)='handleResetAll()'
         *ngIf="getRetrievedTrackersArray().length"
         class="btn fat-border fat-border-black mx-5  my-3 cursor-pointer"
     >
        /!\ Delete all 
     </div>
-    <div class="d-flex justify-content-end foot">
+    <div class="d-flex  foot">
         <div (click)='goTo("about")'
         class="btn fat-border fat-border-black mx-5  my-3 cursor-pointer"
-      
     >
        ? about
     </div>

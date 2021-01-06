@@ -86,7 +86,7 @@
     </div>
     <div class="my-5 middle  d-flex flex-column">
         <div class="d-flex flex-nowrap">
-            <div class="days"></div>
+            <div class="days-numbers"></div>
             <div
                 *ngFor="let month of monthsName; let m = index"
                 class="month days"
@@ -98,7 +98,7 @@
             <div class="d-flex flex-column">
                 <div
                     *ngFor="let el of initTable(31); let l = index"
-                    class="days"
+                    class="days-numbers"
                 >
                     {{ l + 1 }}
                 </div>

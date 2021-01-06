@@ -1,20 +1,27 @@
-<div class="d-flex align-items-center">
+<div class="d-flex mb-3 align-items-center w-100 flex-wrap">
     <input
         *ngIf="index || legend"
         type="text"
         class="form-control mr-3  fixed-width-legend"
         [value]="legend"
-        (blur)='onLegendUpdate($event)'
+        (blur)="onLegendUpdate($event)"
     />
-    <div class='d-flex flex-nowrap'>
-    <input
-        class="btn fat-border fat-border-black cursor-pointer fixed-width"
-        [class.text-light]="textLight"
-        [(colorPicker)]="color"
-        [value]="color"
-        (colorPickerClose)="onColorPicked($event)"
-        [style.background]="color"
-    />
-    <div *ngIf="index > 1" class="btn" (click)="handleDelete()">x</div>
+    <div class="d-flex flex-nowrap">
+        <input
+            class="btn fat-border fat-border-black cursor-pointer fixed-width"
+            [class.text-light]="textLight"
+            [(colorPicker)]="color"
+            [value]="color"
+            cpPosition="bottom"
+            (colorPickerClose)="onColorPicked($event)"
+            [style.background]="color"
+        />
+        <div
+            class="btn"
+            [class.hidden]="index <= 1"
+            (click)="index <= 1 ? '' : handleDelete()"
+        >
+            x
+        </div>
     </div>
 </div>

@@ -16,6 +16,7 @@ export class ColorPickerComponent {
     @Input() textLight? = false
 
     onColorPicked(event: Event): void {
+        event.preventDefault
         this.colorPickerChange.next({ index: this.index, color: event })
     }
     onLegendUpdate(event: Event): void {
