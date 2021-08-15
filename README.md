@@ -1,5 +1,7 @@
 # Color Tracker
 
+https://www.colortracker.app/
+
 This aim of this retro web app is to monitor **habits or mood states** during a long period.
 
 Each case of the calendar can be set (on click) with a custom color, and many calendars can be created.
