@@ -1,9 +1,35 @@
-
 <div class="grid-content">
     <div class="left"></div>
 
     <div class="right my-5">
         <div class="d-flex flex-column">
+            <span class="h3 mx-3 days-height">Period</span>
+            <div class="d-flex">
+                <div
+                    class="btn fixed-width-small fat-border fat-border-black mx-3"
+                    [class.disabled]="activeView === View.Year"
+                    [class.cursor-pointer]="activeView !== View.Year"
+                    (click)="handleChangeView(View.Year)"
+                >
+                    Year
+                </div>
+                <div
+                    class="btn fixed-width-small fat-border fat-border-black mx-3"
+                    [class.disabled]="activeView === View.Month"
+                    [class.cursor-pointer]="activeView !== View.Month"
+                    (click)="handleChangeView(View.Month)"
+                >
+                    Month
+                </div>
+                <div
+                    class="btn fixed-width-small fat-border fat-border-black mx-3"
+                    [class.cursor-pointer]="activeView !== View.Week"
+                    (click)="handleChangeView(View.Week)"
+                    [class.disabled]="activeView === View.Week"
+                >
+                    Week
+                </div>
+            </div>
             <span class="h3 mx-3 days-height">Legend</span>
 
             <app-color-picker
@@ -53,13 +79,13 @@
                     updateColor($event, 'borderColor', 'retrievedBorderColor')
                 "
                 [color]="retrievedBorderColor"
-                class="mb-2  mx-3"
+                class="mb-2 mx-3"
                 [textLight]="true"
             ></app-color-picker>
             <span class="h3 my-3 mx-3 days-height">Data</span>
 
             <div
-                class="btn btn-light cursor-pointer fat-border fat-border-black fixed-width mb-3  mx-3"
+                class="btn btn-light cursor-pointer fat-border fat-border-black fixed-width mb-3 mx-3"
                 (click)="toggleEdition()"
             >
                 {{ !editionMode ? 'show data' : 'hide data' }}
@@ -77,14 +103,17 @@
                 /!\ reset data
             </div>
             <div
-            class="btn  fixed-width fat-border fat-border-black mx-3 cursor-pointer"
-            (click)="handleTrackerDelete()"
-        >
-            /!\ delete tracker
-        </div>
+                class="btn fixed-width fat-border fat-border-black mx-3 cursor-pointer"
+                (click)="handleTrackerDelete()"
+            >
+                /!\ delete tracker
+            </div>
         </div>
     </div>
-    <div class="my-5 middle  d-flex flex-column">
+    <div
+        *ngIf="activeView === View.Year"
+        class="my-5 middle d-flex flex-column"
+    >
         <div class="d-flex flex-nowrap">
             <div class="days-numbers"></div>
             <div
@@ -117,6 +146,90 @@
                         (contextmenu)="handleRightClick(year, month, j)"
                         [style.backgroundColor]="getColor(year, month, j)"
                         [style.borderColor]="retrievedBorderColor"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="activeView === View.Week" class="my-5 d-flex flex-nowrap">
+        <div class="d-flex mx-auto my-2">
+            <div>
+                <div *ngFor="let day of getCurrentWeek()" class="daysNames">
+                    <span>{{ weekDayName(day) }}</span>
+                    - <span>{{ weekDayNumber(day) }}</span>
+                    <span class="ml-2 text-uppercase">{{
+                        weekDayMonth(day)
+                    }}</span>
+                </div>
+            </div>
+            <div>
+                <div *ngFor="let day of getCurrentWeek()" class="days mx-3">
+                    <div
+                        class="cursor-pointer h-100 w-100 fat-border"
+                        [style.borderColor]="retrievedBorderColor"
+                        [style.backgroundColor]="
+                            getColor(
+                                year,
+                                weekDayMonth(day),
+                                weekDayNumber(day) - 1
+                            )
+                        "
+                        (contextmenu)="
+                            handleRightClick(
+                                year,
+                                weekDayMonth(day),
+                                weekDayNumber(day) - 1
+                            )
+                        "
+                        (click)="
+                            handleClick(
+                                year,
+                                weekDayMonth(day),
+                                weekDayNumber(day) - 1
+                            )
+                        "
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="activeView === View.Month" class="my-5 d-flex flex-nowrap">
+        <div class="d-flex mx-auto my-2">
+            <div>
+                <div *ngFor="let day of getCurrentMonth()" class="daysNames">
+                    <span>{{ weekDayName(day) }}</span>
+                    - <span>{{ weekDayNumber(day) }}</span>
+                    <span class="ml-2 text-uppercase">{{
+                        weekDayMonth(day)
+                    }}</span>
+                </div>
+            </div>
+            <div>
+                <div *ngFor="let day of getCurrentMonth()" class="days mx-3">
+                    <div
+                        class="cursor-pointer h-100 w-100 fat-border"
+                        [style.borderColor]="retrievedBorderColor"
+                        [style.backgroundColor]="
+                            getColor(
+                                year,
+                                weekDayMonth(day),
+                                weekDayNumber(day) - 1
+                            )
+                        "
+                        (contextmenu)="
+                            handleRightClick(
+                                year,
+                                weekDayMonth(day),
+                                weekDayNumber(day) - 1
+                            )
+                        "
+                        (click)="
+                            handleClick(
+                                year,
+                                weekDayMonth(day),
+                                weekDayNumber(day) - 1
+                            )
+                        "
                     ></div>
                 </div>
             </div>

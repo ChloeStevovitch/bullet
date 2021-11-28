@@ -24,8 +24,8 @@ body {
         outline: 2px solid black;
     }
 }
-.grid{  
-  height: fit-content;
+.grid {
+    height: fit-content;
 }
 
 .cursor-pointer {
@@ -54,6 +54,14 @@ input[type='text'] {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+.daysNames {
+    height: 4vw;
+    text-align: right;
+    line-height: 4vw;
+    margin-bottom: -2px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 .month {
     margin-right: -2px;
 }
@@ -71,6 +79,9 @@ input[type='text'] {
 }
 .underlined {
     border-bottom: 2px solid;
+}
+.fixed-width-small {
+    max-width: fit-content;
 }
 .fixed-width {
     width: 18vw;
@@ -95,7 +106,7 @@ input[type='text'] {
     grid-template-areas: 'left middle right';
     gap: 3rem;
 }
-.foot{
+.foot {
     justify-content: flex-end;
 }
 .fit-content {
@@ -119,10 +130,10 @@ input[type='text'] {
 .foot {
     grid-area: foot;
 }
-.nav{
+.nav {
     justify-content: center;
 }
-.days-numbers{
+.days-numbers {
     width: 8vw;
     height: 4vw;
     text-align: center;
@@ -133,9 +144,8 @@ input[type='text'] {
     margin-bottom: -2px;
 }
 
-
 @media (max-width: 800px) {
-    *{
+    * {
         font-size: small;
     }
     .grid {
@@ -152,27 +162,25 @@ input[type='text'] {
         grid-template-areas: 'middle' 'right';
         gap: 0;
     }
-    
+
     .days {
         width: 7vw;
         height: 7vw;
     }
-    .days-numbers{
+    .days-numbers {
         width: 12vw;
         height: 7vw;
         line-height: 7vw;
     }
     .fixed-width,
     .fixed-width-legend,
-    .fixed-width-edition
-     {
-        width: 90vw ;
+    .fixed-width-edition {
+        width: 90vw;
     }
-    .hidden{
+    .hidden {
         opacity: 0;
-       
     }
-    .foot{
+    .foot {
         justify-content: space-evenly;
     }
 }

@@ -1,15 +1,35 @@
-import { Component, Input, OnInit } from '@angular/core'
+import {
+    Component,
+    Input,
+    ModuleWithComponentFactories,
+    OnInit,
+    Pipe,
+    PipeTransform,
+} from '@angular/core'
 import * as _ from 'lodash'
 import { LocalServiceService } from '../local-service.service'
+import * as moment from 'moment'
+import { NUMBER_TYPE } from '@angular/compiler/src/output/output_ast'
+export enum View {
+    Year,
+    Month,
+    Week,
+}
+// @Pipe({ name: 'dayName' })
+// export class DayNamePipe implements PipeTransform {
+//     transform(value: string): number {
+//         let last = _.last(_.split(value, ','))
+//         return last
+//     }
+// }
 
 @Component({
     selector: 'app-color-tracker',
     templateUrl: './color-tracker.component.html',
     styleUrls: ['./color-tracker.component.scss'],
-    // encapsulation: ViewEncapsulation.None,
 })
 export class ColorTrackerComponent implements OnInit {
-    monthsLength = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    monthsLength = []
     monthsName = [
         'Jan',
         'Feb',
@@ -24,6 +44,8 @@ export class ColorTrackerComponent implements OnInit {
         'Nov',
         'Dec',
     ]
+    activeView = View.Year
+    View = View
     JSON = JSON
     year = 2021
     retrievedBackgroundColor
@@ -35,8 +57,27 @@ export class ColorTrackerComponent implements OnInit {
     retrievedTracker
     inputId
     editionMode = false
+    month
+    monthLength
     constructor(private s: LocalServiceService) {}
     ngOnInit() {
+        this.year = Number(
+            moment(moment().clone().startOf('year').format('YYYY'))['_i']
+        )
+        this.monthsName.forEach((el, index) => {
+            let indexString
+            if (index + 1 < 10) {
+                indexString = '0' + (index + 1)
+            } else {
+                indexString = index + 1 + ''
+            }
+            _.set(
+                this,
+                'monthsLength[' + index + ']',
+                moment(this.year + '-' + indexString, 'YYYY-MM').daysInMonth()
+            )
+        })
+
         this.s.currentId.subscribe((res) => {
             this.inputId = this.s.currentId.value
 
@@ -114,15 +155,48 @@ export class ColorTrackerComponent implements OnInit {
             this.retrievedTracker = this.s.getTrackerData(this.inputId)
         })
     }
+    getMonthLength(month) {
+        return moment(month, 'MMM').daysInMonth()
+    }
+    weekDayName(value: string): number {
+        return _.last(_.split(value, ','))
+    }
+    weekDayMonth(value) {
+        return _.first(_.split(value, ','))
+    }
+    weekDayNumber(value: string): number {
+        return Number(_.split(value, ',')[1])
+    }
+    getCurrentWeek() {
+        var currentDate = moment()
+        var weekStart = currentDate.clone().startOf('isoWeek')
+        var days = []
+        for (var i = 0; i <= 6; i++) {
+            days.push(moment(weekStart).add(i, 'days').format('MMM,D,dddd'))
+        }
+        return days
+    }
+
+    getCurrentMonth() {
+        let month = moment().format('MMM')
+        let monthStart = moment(this.year + '-' + month + '01', 'YYYY-MMM-D')
+        var days = []
+        for (var i = 0; i < this.getMonthLength(month); i++) {
+            days.push(moment(monthStart).add(i, 'days').format('MMM,D,dddd'))
+        }
+        return days
+    }
 
     initTable(length) {
         return new Array(length)
     }
-
+    handleChangeView(view) {
+        this.activeView = view
+    }
     reset() {
         if (confirm('Are you sure you want to delete all your data ? ')) {
             this.s.setTrackerVariable(this.inputId, 'savedData', {})
-                    this.s.currentId.next(this.inputId)
+            this.s.currentId.next(this.inputId)
 
             document.body.scrollTop = document.documentElement.scrollTop = 0
         }
@@ -174,8 +248,6 @@ export class ColorTrackerComponent implements OnInit {
             _.get(this, retrievedDataName)
         )
         this.s.currentId.next(this.inputId)
-
-
     }
 
     setLegend(event) {
@@ -265,7 +337,7 @@ export class ColorTrackerComponent implements OnInit {
         }
         _.set(this.retrievedData, date, value)
         this.s.setTrackerVariable(this.inputId, 'savedData', this.retrievedData)
-        if(this.editionMode){
+        if (this.editionMode) {
             this.retrievedTracker = this.s.getTrackerData(this.inputId)
         }
     }
