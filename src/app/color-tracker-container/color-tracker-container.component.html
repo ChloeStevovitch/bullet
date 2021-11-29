@@ -10,44 +10,69 @@
         <span class="h1 my-5">Color tracker</span>
         <ul class="nav">
             <li
-                *ngFor="let el of getRetrievedTrackersArray(); let index = index"
+                *ngFor="
+                    let el of getRetrievedTrackersArray();
+                    let index = index
+                "
                 class="nav-item cursor-pointer mb-2"
             >
-                <div *ngIf="s.currentId.value === _.get(el,'id')" class="active" >
+                <div
+                    *ngIf="s.currentId.value === _.get(el, 'id')"
+                    class="active"
+                >
                     <input
                         type="text"
-                        class="form-control "
-                        [style.color]="_.get(el,'color')"
-                        [style.width.ch]="getATitle(_.get(el,'title'), index).length + 5"
-                        [value]="getATitle(_.get(el,'title'), index)"
+                        class="form-control"
+                        [style.color]="_.get(el, 'color')"
+                        [style.width.ch]="
+                            getATitle(_.get(el, 'title'), index).length + 5
+                        "
+                        [value]="getATitle(_.get(el, 'title'), index)"
                         (blur)="onTitleUpdate($event)"
                     />
                 </div>
-                <div *ngIf="s.currentId.value !== el.id" >
-                    <div class="btn" [style.color]="_.get(el,'color')" (click)='switchTracker( _.get(el,"id"))'><span class='pb-1 underlined'>{{ getATitle(_.get(el,'title'),index) }}</span></div>
+                <div *ngIf="s.currentId.value !== el.id">
+                    <div
+                        class="btn"
+                        [style.color]="_.get(el, 'color')"
+                        (click)="switchTracker(_.get(el, 'id'))"
+                    >
+                        <span class="pb-1 underlined">{{
+                            getATitle(_.get(el, 'title'), index)
+                        }}</span>
+                    </div>
                 </div>
-            </li>   
+            </li>
             <li class="nav-item cursor-pointer">
-                <div class="btn btn-light mx-3 fat-border fat-border-black" (click)="handleNewTracker()">+ new</div>
+                <div
+                    class="btn btn-light mx-3 fat-border fat-border-black"
+                    (click)="handleNewTracker()"
+                >
+                    + new
+                </div>
             </li>
         </ul>
     </div>
 
-    <app-color-tracker *ngIf="s.currentId.value"
+    <app-color-tracker
+        *ngIf="s.currentId.value"
         class="content"
     ></app-color-tracker>
     <div class="d-flex foot">
-        <div (click)='handleResetAll()'
-        *ngIf="getRetrievedTrackersArray().length"
-        class="btn fat-border fat-border-black mx-5  my-3 cursor-pointer"
-    >
-       /!\ Delete all 
-    </div>
-    <div class="d-flex  foot">
-        <div (click)='goTo("about")'
-        class="btn fat-border fat-border-black mx-5  my-3 cursor-pointer"
-    >
-       ? about
-    </div>
+        <div
+            (click)="handleResetAll()"
+            *ngIf="getRetrievedTrackersArray().length"
+            class="btn fat-border fat-border-black mx-3 my-3 cursor-pointer"
+        >
+            /!\ Delete all
+        </div>
+        <div class="d-flex foot">
+            <div
+                (click)="goTo('about')"
+                class="btn fat-border fat-border-black mx-3 my-3 cursor-pointer"
+            >
+                ? about
+            </div>
+        </div>
     </div>
 </div>

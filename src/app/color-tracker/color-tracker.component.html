@@ -47,7 +47,7 @@
                 (deleteEvent)="handleDelete($event)"
                 [index]="h"
                 [color]="el.color"
-                [retrievedCount]='_.countBy(retrievedData)'
+                [retrievedCount]="_.countBy(retrievedData)"
                 [legend]="el.legend ? el.legend : 'Level ' + h"
                 class="mb-2 mx-3"
             ></app-color-picker>
@@ -57,63 +57,75 @@
             >
                 add a color
             </div>
-
-            <span class="h3 my-3 mx-3 days-height">Background</span>
-            <app-color-picker
-                (colorPickerChange)="
-                    updateColor(
-                        $event,
-                        'backgroundColor',
-                        'retrievedBackgroundColor'
-                    )
-                "
-                [color]="retrievedBackgroundColor"
-                class="mb-2 mx-3"
-            ></app-color-picker>
-
-            <span class="h3 my-3 mx-3 days-height">Text</span>
-            <app-color-picker
-                (colorPickerChange)="
-                    updateColor($event, 'textColor', 'retrievedTextColor')
-                "
-                [color]="retrievedTextColor"
-                class="mb-2 mx-3"
-                [textLight]="true"
-            ></app-color-picker>
-            <span class="h3 my-3 mx-3 days-height">Grid</span>
-            <app-color-picker
-                (colorPickerChange)="
-                    updateColor($event, 'borderColor', 'retrievedBorderColor')
-                "
-                [color]="retrievedBorderColor"
-                class="mb-2 mx-3"
-                [textLight]="true"
-            ></app-color-picker>
-            <span class="h3 my-3 mx-3 days-height">Data</span>
-
             <div
-                class="btn btn-light cursor-pointer fat-border fat-border-black fixed-width mb-3 mx-3"
-                (click)="toggleEdition()"
+                class="btn my-5 cursor-pointer btn-light fat-border fat-border-black fixed-width mx-3"
+                (click)="toggleOptions()"
             >
-                {{ !editionMode ? 'show data' : 'hide data' }}
+                {{ options ? 'Less options ▲' : 'Advanced options ▼' }}
             </div>
-            <textarea
-                class="formControl mx-3 mb-3 fixed-width-edition"
-                (blur)="handleNewData($event)"
-                *ngIf="editionMode"
-                [value]="JSON.stringify(retrievedTracker)"
-            ></textarea>
-            <div
-                class="btn fat-border fat-border-black fixed-width mb-3 mx-3 cursor-pointer"
-                (click)="reset()"
-            >
-                /!\ reset data
-            </div>
-            <div
-                class="btn fixed-width fat-border fat-border-black mx-3 cursor-pointer"
-                (click)="handleTrackerDelete()"
-            >
-                /!\ delete tracker
+            <div *ngIf="options">
+                <span class="h3 my-3 mx-3 days-height">Background</span>
+                <app-color-picker
+                    (colorPickerChange)="
+                        updateColor(
+                            $event,
+                            'backgroundColor',
+                            'retrievedBackgroundColor'
+                        )
+                    "
+                    [color]="retrievedBackgroundColor"
+                    class="mb-2 mx-3"
+                ></app-color-picker>
+
+                <span class="h3 my-3 mx-3 days-height">Text</span>
+                <app-color-picker
+                    (colorPickerChange)="
+                        updateColor($event, 'textColor', 'retrievedTextColor')
+                    "
+                    [color]="retrievedTextColor"
+                    class="mb-2 mx-3"
+                    [textLight]="true"
+                ></app-color-picker>
+                <span class="h3 my-3 mx-3 days-height">Grid</span>
+                <app-color-picker
+                    (colorPickerChange)="
+                        updateColor(
+                            $event,
+                            'borderColor',
+                            'retrievedBorderColor'
+                        )
+                    "
+                    [color]="retrievedBorderColor"
+                    class="mb-2 mx-3"
+                    [textLight]="true"
+                ></app-color-picker>
+                <span class="h3 my-3 mx-3 days-height">Data</span>
+                <div class="d-flex flex-column">
+                    <div
+                        class="btn btn-light cursor-pointer fat-border fat-border-black fixed-width mb-3 mx-3"
+                        (click)="toggleEdition()"
+                    >
+                        {{ !editionMode ? 'show data' : 'hide data' }}
+                    </div>
+                    <textarea
+                        class="formControl mx-3 mb-3 fixed-width-edition"
+                        (blur)="handleNewData($event)"
+                        *ngIf="editionMode"
+                        [value]="JSON.stringify(retrievedTracker)"
+                    ></textarea>
+                    <div
+                        class="btn fat-border fat-border-black fixed-width mb-3 mx-3 cursor-pointer"
+                        (click)="reset()"
+                    >
+                        /!\ reset data
+                    </div>
+                    <div
+                        class="btn fixed-width fat-border fat-border-black mx-3 cursor-pointer"
+                        (click)="handleTrackerDelete()"
+                    >
+                        /!\ delete tracker
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -121,7 +133,7 @@
         *ngIf="activeView === View.Year"
         class="my-5 middle d-flex flex-column"
     >
-        <div class="d-flex flex-nowrap mx-auto align-items-center">
+        <div class="historic d-flex flex-nowrap mx-auto align-items-center">
             <div
                 class="btn fixed-width-small fat-border fat-border-black mx-3"
                 (click)="setModifier('yearModifier', -1)"
@@ -136,9 +148,9 @@
             </div>
             <span class="mx-2">{{ year + yearModifier }} </span>
         </div>
-        <div class="d-flex flex-nowrap">
+        <div class="d-flex flex-nowrap monthsNameContainer">
             <div class="days-numbers"></div>
-            <div *ngFor="let month of monthsName" class="month days">
+            <div *ngFor="let month of monthsName" class="month days monthNames">
                 {{ month }}
             </div>
         </div>
@@ -184,15 +196,15 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex flex-nowrap">
+        <div class="d-flex flex-nowrap monthsNameContainer">
             <div class="days-numbers"></div>
-            <div *ngFor="let month of monthsName" class="month days">
+            <div *ngFor="let month of monthsName" class="month days monthNames">
                 {{ month }}
             </div>
         </div>
     </div>
     <div *ngIf="activeView === View.Week" class="my-5 d-flex flex-column">
-        <div class="d-flex flex-nowrap mx-auto">
+        <div class="historic d-flex flex-nowrap mx-auto">
             <div
                 class="btn fixed-width-small fat-border fat-border-black mx-3"
                 (click)="setModifier('weekModifier', -1)"
@@ -256,7 +268,7 @@
         *ngIf="activeView === View.Month"
         class="my-5 d-flex flex-column flex-nowrap"
     >
-        <div class="d-flex flex-nowrap mx-auto">
+        <div class="historic d-flex flex-nowrap mx-auto">
             <div
                 class="btn fixed-width-small fat-border fat-border-black mx-3"
                 (click)="setModifier('monthModifier', -1)"

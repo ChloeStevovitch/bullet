@@ -144,16 +144,17 @@ input[type='text'] {
     margin-bottom: -2px;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1150px) {
     * {
         font-size: small;
     }
+
     .grid {
         padding: 0.5rem;
     }
     .days-height {
-        height: 7vw;
-        line-height: 7vw;
+        height: 6vw;
+        line-height: 6vw;
     }
     .grid-content {
         display: grid;
@@ -162,25 +163,40 @@ input[type='text'] {
         grid-template-areas: 'middle' 'right';
         gap: 0;
     }
-
+    .monthNames {
+        padding-top: 1vh;
+        padding-bottom: 1vh;
+    }
+    .daysNames {
+        height: 6vw;
+        line-height: 6vw;
+    }
+    .historic {
+        margin-bottom: 3vh;
+    }
     .days {
-        width: 7vw;
-        height: 7vw;
+        width: 6vw;
+        height: 6vw;
     }
     .days-numbers {
-        width: 12vw;
-        height: 7vw;
-        line-height: 7vw;
+        width: 9vw;
+        height: 6vw;
+        line-height: 6vw;
     }
     .fixed-width,
     .fixed-width-legend,
     .fixed-width-edition {
-        width: 90vw;
+        width: 59vw;
     }
     .hidden {
         opacity: 0;
     }
     .foot {
         justify-content: space-evenly;
+    }
+    @media (max-width: 649px) {
+        .monthsNameContainer {
+            margin-left: 1.5vw;
+        }
     }
 }

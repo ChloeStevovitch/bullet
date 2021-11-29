@@ -44,6 +44,7 @@ export class ColorTrackerComponent {
     monthModifier = 0
     weekModifier = 0
     yearModifier = 0
+    options = false
     _ = _
     constructor(private s: LocalServiceService) {
         this.s.currentId.subscribe((res) => {
@@ -123,6 +124,9 @@ export class ColorTrackerComponent {
             this.retrievedTracker = this.s.getTrackerData(this.inputId)
         })
         this.year = Number(moment().format('YYYY'))
+    }
+    toggleOptions() {
+        this.options = !this.options
     }
     getLevelCount() {
         _.countBy(this.retrievedData)
@@ -275,7 +279,7 @@ export class ColorTrackerComponent {
         }
         if (
             confirm(
-                'Are you sure you want to delete this color ? this will affect the grinputId '
+                'Are you sure you want to delete this color ? this will affect the grid '
             )
         ) {
             const index = _.get(event, 'index')

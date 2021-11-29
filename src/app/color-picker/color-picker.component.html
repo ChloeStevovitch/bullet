@@ -8,7 +8,7 @@
     />
     <div class="d-flex flex-nowrap">
         <input
-            class="btn fat-border fat-border-black cursor-pointer fixed-width"
+            class="btn fat-border my-2 fat-border-black cursor-pointer fixed-width"
             [class.text-light]="textLight"
             [(colorPicker)]="color"
             [value]="color"
@@ -18,11 +18,11 @@
             [style.background]="color"
         />
         <div
-            class="btn"
+            class="btn d-flex align-items-center"
             [class.hidden]="index <= 1"
             (click)="index <= 1 ? '' : handleDelete()"
         >
-            x
+            <span>x</span>
         </div>
     </div>
     <div *ngIf="index === 0" class="text-center count mx-2 d-flex flex-nowrap">

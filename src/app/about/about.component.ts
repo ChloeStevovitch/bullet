@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
+import * as moment from 'moment'
 
 @Component({
     selector: 'app-about',
@@ -19,7 +20,9 @@ export class AboutComponent implements OnInit, AfterViewInit {
         this.showText(this.textElement.nativeElement, 'Hello', 0, 20)
         this.showText(
             this.textElement1.nativeElement,
-            'My name is Chloe, 30 y.o web developer based in Montreal (Canada).',
+            'My name is Chloe, ' +
+                moment().diff('1990-07-04', 'years') +
+                ' y.o web developer based in Montreal (Canada).',
             0,
             15,
             600
@@ -27,7 +30,7 @@ export class AboutComponent implements OnInit, AfterViewInit {
 
         this.showText(
             this.textElement2.nativeElement,
-            'I had fun developing this little app on my own during the last Christmas holidays.',
+            'I had fun developing this little angular app on my own during the last Christmas holidays.',
             0,
             15,
             2500
@@ -59,7 +62,6 @@ export class AboutComponent implements OnInit, AfterViewInit {
         this.router.navigate([name])
     }
     goToUrl(url): void {
-      window.open(url, "_blank");
+        window.open(url, '_blank')
     }
-        
 }
