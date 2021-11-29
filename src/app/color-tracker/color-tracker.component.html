@@ -4,10 +4,12 @@
     <div class="right my-5">
         <div class="d-flex flex-column">
             <span class="h3 mx-3 days-height">Period</span>
-            <div class="d-flex">
+            <div class="d-flex mb-3">
                 <div
                     class="btn fixed-width-small fat-border fat-border-black mx-3"
                     [class.disabled]="activeView === View.Year"
+                    [class.bg-dark]="activeView === View.Year"
+                    [class.text-light]="activeView === View.Year"
                     [class.cursor-pointer]="activeView !== View.Year"
                     (click)="handleChangeView(View.Year)"
                 >
@@ -16,6 +18,8 @@
                 <div
                     class="btn fixed-width-small fat-border fat-border-black mx-3"
                     [class.disabled]="activeView === View.Month"
+                    [class.bg-dark]="activeView === View.Month"
+                    [class.text-light]="activeView === View.Month"
                     [class.cursor-pointer]="activeView !== View.Month"
                     (click)="handleChangeView(View.Month)"
                 >
@@ -24,6 +28,8 @@
                 <div
                     class="btn fixed-width-small fat-border fat-border-black mx-3"
                     [class.cursor-pointer]="activeView !== View.Week"
+                    [class.bg-dark]="activeView === View.Week"
+                    [class.text-light]="activeView === View.Week"
                     (click)="handleChangeView(View.Week)"
                     [class.disabled]="activeView === View.Week"
                 >
@@ -41,6 +47,7 @@
                 (deleteEvent)="handleDelete($event)"
                 [index]="h"
                 [color]="el.color"
+                [retrievedCount]='_.countBy(retrievedData)'
                 [legend]="el.legend ? el.legend : 'Level ' + h"
                 class="mb-2 mx-3"
             ></app-color-picker>
@@ -114,13 +121,25 @@
         *ngIf="activeView === View.Year"
         class="my-5 middle d-flex flex-column"
     >
+        <div class="d-flex flex-nowrap mx-auto align-items-center">
+            <div
+                class="btn fixed-width-small fat-border fat-border-black mx-3"
+                (click)="setModifier('yearModifier', -1)"
+            >
+                <
+            </div>
+            <div
+                class="btn fixed-width-small fat-border fat-border-black mx-3"
+                (click)="setModifier('yearModifier', +1)"
+            >
+                >
+            </div>
+            <span class="mx-2">{{ year + yearModifier }} </span>
+        </div>
         <div class="d-flex flex-nowrap">
             <div class="days-numbers"></div>
-            <div
-                *ngFor="let month of monthsName; let m = index"
-                class="month days"
-            >
-                {{ monthsName[m] }}
+            <div *ngFor="let month of monthsName" class="month days">
+                {{ month }}
             </div>
         </div>
         <div class="d-flex flex-nowrap">
@@ -137,55 +156,95 @@
                 class="d-flex flex-column month"
             >
                 <div
-                    *ngFor="let el of initTable(monthsLength[i]); let j = index"
+                    *ngFor="
+                        let el of initTable(getMonthLength(yearModifier, i));
+                        let j = index
+                    "
                     class="days"
                 >
                     <div
                         class="cursor-pointer h-100 w-100 fat-border"
-                        (click)="handleClick(year, month, j)"
-                        (contextmenu)="handleRightClick(year, month, j)"
-                        [style.backgroundColor]="getColor(year, month, j)"
+                        (click)="handleClick(year + yearModifier, month, j)"
+                        (contextmenu)="
+                            handleRightClick(year + yearModifier, month, j)
+                        "
+                        [style.backgroundColor]="
+                            getColor(year + yearModifier, month, j)
+                        "
                         [style.borderColor]="retrievedBorderColor"
                     ></div>
                 </div>
             </div>
+            <div class="d-flex flex-column">
+                <div
+                    *ngFor="let el of initTable(31); let l = index"
+                    class="days-numbers"
+                >
+                    {{ l + 1 }}
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-nowrap">
+            <div class="days-numbers"></div>
+            <div *ngFor="let month of monthsName" class="month days">
+                {{ month }}
+            </div>
         </div>
     </div>
-    <div *ngIf="activeView === View.Week" class="my-5 d-flex flex-nowrap">
+    <div *ngIf="activeView === View.Week" class="my-5 d-flex flex-column">
+        <div class="d-flex flex-nowrap mx-auto">
+            <div
+                class="btn fixed-width-small fat-border fat-border-black mx-3"
+                (click)="setModifier('weekModifier', -1)"
+            >
+                <
+            </div>
+            <div
+                class="btn fixed-width-small fat-border fat-border-black mx-3"
+                (click)="setModifier('weekModifier', +1)"
+            >
+                >
+            </div>
+        </div>
         <div class="d-flex mx-auto my-2">
             <div>
-                <div *ngFor="let day of getCurrentWeek()" class="daysNames">
-                    <span>{{ weekDayName(day) }}</span>
-                    - <span>{{ weekDayNumber(day) }}</span>
-                    <span class="ml-2 text-uppercase">{{
-                        weekDayMonth(day)
-                    }}</span>
+                <div
+                    *ngFor="let day of getWeekDetails(weekModifier)"
+                    class="daysNames"
+                >
+                    <span>{{ getDayName(day) }}</span>
+                    - <span>{{ getDayNumber(day) }}</span>
+                    <span class="ml-2 text-uppercase">{{ getMonth(day) }}</span>
+                    <span class="my-2"> {{ getYear(day) }}</span>
                 </div>
             </div>
             <div>
-                <div *ngFor="let day of getCurrentWeek()" class="days mx-3">
+                <div
+                    *ngFor="let day of getWeekDetails(weekModifier)"
+                    class="days mx-3"
+                >
                     <div
                         class="cursor-pointer h-100 w-100 fat-border"
                         [style.borderColor]="retrievedBorderColor"
                         [style.backgroundColor]="
                             getColor(
-                                year,
-                                weekDayMonth(day),
-                                weekDayNumber(day) - 1
+                                getYear(day),
+                                getMonth(day),
+                                getDayNumber(day) - 1
                             )
                         "
                         (contextmenu)="
                             handleRightClick(
-                                year,
-                                weekDayMonth(day),
-                                weekDayNumber(day) - 1
+                                getYear(day),
+                                getMonth(day),
+                                getDayNumber(day) - 1
                             )
                         "
                         (click)="
                             handleClick(
-                                year,
-                                weekDayMonth(day),
-                                weekDayNumber(day) - 1
+                                getYear(day),
+                                getMonth(day),
+                                getDayNumber(day) - 1
                             )
                         "
                     ></div>
@@ -193,41 +252,64 @@
             </div>
         </div>
     </div>
-    <div *ngIf="activeView === View.Month" class="my-5 d-flex flex-nowrap">
+    <div
+        *ngIf="activeView === View.Month"
+        class="my-5 d-flex flex-column flex-nowrap"
+    >
+        <div class="d-flex flex-nowrap mx-auto">
+            <div
+                class="btn fixed-width-small fat-border fat-border-black mx-3"
+                (click)="setModifier('monthModifier', -1)"
+            >
+                <
+            </div>
+            <div
+                class="btn fixed-width-small fat-border fat-border-black mx-3"
+                (click)="setModifier('monthModifier', +1)"
+            >
+                >
+            </div>
+        </div>
         <div class="d-flex mx-auto my-2">
             <div>
-                <div *ngFor="let day of getCurrentMonth()" class="daysNames">
-                    <span>{{ weekDayName(day) }}</span>
-                    - <span>{{ weekDayNumber(day) }}</span>
-                    <span class="ml-2 text-uppercase">{{
-                        weekDayMonth(day)
-                    }}</span>
+                <div
+                    *ngFor="let day of getMonthDetails(monthModifier)"
+                    class="daysNames"
+                >
+                    <span>{{ getDayName(day) }}</span>
+                    - <span>{{ getDayNumber(day) }}</span>
+
+                    <span class="ml-2 text-uppercase">{{ getMonth(day) }}</span>
+                    <span class="my-2"> {{ getYear(day) }}</span>
                 </div>
             </div>
             <div>
-                <div *ngFor="let day of getCurrentMonth()" class="days mx-3">
+                <div
+                    *ngFor="let day of getMonthDetails(monthModifier)"
+                    class="days mx-3"
+                >
                     <div
                         class="cursor-pointer h-100 w-100 fat-border"
                         [style.borderColor]="retrievedBorderColor"
                         [style.backgroundColor]="
                             getColor(
-                                year,
-                                weekDayMonth(day),
-                                weekDayNumber(day) - 1
+                                getYear(day),
+                                getMonth(day),
+                                getDayNumber(day) - 1
                             )
                         "
                         (contextmenu)="
                             handleRightClick(
-                                year,
-                                weekDayMonth(day),
-                                weekDayNumber(day) - 1
+                                getYear(day),
+                                getMonth(day),
+                                getDayNumber(day) - 1
                             )
                         "
                         (click)="
                             handleClick(
-                                year,
-                                weekDayMonth(day),
-                                weekDayNumber(day) - 1
+                                getYear(day),
+                                getMonth(day),
+                                getDayNumber(day) - 1
                             )
                         "
                     ></div>

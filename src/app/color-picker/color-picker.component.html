@@ -2,7 +2,7 @@
     <input
         *ngIf="index || legend"
         type="text"
-        class="form-control mr-3  fixed-width-legend"
+        class="form-control mr-3 fixed-width-legend"
         [value]="legend"
         (blur)="onLegendUpdate($event)"
     />
@@ -24,5 +24,14 @@
         >
             x
         </div>
+    </div>
+    <div *ngIf="index === 0" class="text-center count mx-2 d-flex flex-nowrap">
+        <span class="big"> ∞</span>
+    </div>
+    <div
+        *ngIf="index > 0"
+        class="small text-center count mx-2 d-flex flex-nowrap"
+    >
+        {{ retrievedCount[index] ? retrievedCount[index] : 0 }}
     </div>
 </div>

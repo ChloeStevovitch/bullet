@@ -1,3 +1,17 @@
-:host{
+:host {
     width: 100%;
+    .count {
+        border: 2px dashed black;
+        min-width: 2.3rem;
+        height: 2rem;
+        line-height: 2rem;
+        padding-left: 3px;
+        padding-right: 3px;
+        text-align: center;
+        background-color: #00000029;
+    }
+    .big {
+        line-height: 1rem;
+        font-size: 30px;
+    }
 }

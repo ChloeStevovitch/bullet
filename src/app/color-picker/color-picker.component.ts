@@ -11,6 +11,7 @@ export class ColorPickerComponent {
     @Output() colorPickerChange = new BehaviorSubject({})
     @Output() deleteEvent = new BehaviorSubject({})
     @Input() color
+    @Input() retrievedCount?
     @Input() index? = null
     @Input() legend? = null
     @Input() textLight? = false
@@ -20,7 +21,10 @@ export class ColorPickerComponent {
         this.colorPickerChange.next({ index: this.index, color: event })
     }
     onLegendUpdate(event: Event): void {
-        this.legendUpdate.next({ index: this.index, legend: _.get(event.target,'value')  })
+        this.legendUpdate.next({
+            index: this.index,
+            legend: _.get(event.target, 'value'),
+        })
     }
     handleDelete(): void {
         this.deleteEvent.next({ index: this.index })
